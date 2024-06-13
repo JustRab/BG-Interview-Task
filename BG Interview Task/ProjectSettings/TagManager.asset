@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Slot
   - ObjectDraggerParent
+  - ItemDraggerParent
+  - EquipmentManager
   layers:
   - Default
   - TransparentFX
