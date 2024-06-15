@@ -30,4 +30,31 @@ public class InventoryManager : MonoBehaviour
         InventoryItem inventoryItem = newItemGo.GetComponent<InventoryItem>();
         inventoryItem.InitialiseItem(item);
     }
+
+    public List<Item> GetItems()
+    {
+        List<Item> items = new List<Item>();
+        foreach (InventorySlot inventorySlot in inventorySlots)
+        {
+            InventoryItem item = inventorySlot.GetComponentInChildren<InventoryItem>();
+            if (item != null)
+            {
+                items.Add(item.item);
+            }
+        }
+        return items;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log("Items in inventory:");
+            List<Item> items = GetItems();
+            foreach (Item item in items)
+            {
+                Debug.Log(item.name);
+            }
+        }
+    }
 }

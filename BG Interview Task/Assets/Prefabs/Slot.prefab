@@ -113,3 +113,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fbcb2439c7070743a5c86beba2f9750, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  item: {fileID: 0}
+  equipmentManager: {fileID: 0}
+  equipmentSO: {fileID: 11400000, guid: ba7942a9458f35f43ab93f8d420e48b0, type: 2}

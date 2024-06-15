@@ -7,38 +7,48 @@ public class EquipmentSlot : MonoBehaviour, IDropHandler
 {
     public GameObject droppedObject;
     public EquipmentType equipmentType; 
-    public InventoryPool inventoryPool;
 
     [SerializeField] EquipmentManager equipmentManager;
-    [SerializeField] InventoryItem InventoryItem;
+    [SerializeField] InventoryItem inventoryItem;
     [SerializeField] InventoryManager inventoryManager;
     [SerializeField] EquipmentSO equipmentSO;
 
     [SerializeField] Item item;
 
+    [SerializeField] private PlayerController playerController;
+
+    void OnEnable()
+    {
+       playerController = GameObject.FindGameObjectsWithTag("Player")[0].GetComponent<PlayerController>();
+    }
+
     public void OnDrop(PointerEventData pointerData)
     {
         
         Debug.Log("Drop");
-
-
-            if (droppedObject == null && InventoryItem.draggedObject != null)
-            {
-                droppedObject = InventoryItem.draggedObject;
-                item = droppedObject.GetComponent<InventoryItem>().item;
+        if (transform.childCount == 0)
+        {
+                item = pointerData.pointerDrag.GetComponent<InventoryItem>().item;
+                InventoryItem inventoryItem = pointerData.pointerDrag.GetComponent<InventoryItem>();
                 if (item.equipmentType == equipmentType)
                 {
-                    droppedObject.transform.SetParent(transform);
-                    droppedObject.transform.position = transform.position;
-                    InventoryItem.draggedObject = null;
+                    droppedObject = pointerData.pointerDrag;
+                    inventoryItem.parentAfterDrag = transform;
                     equipmentManager.EquipItem(item, equipmentType);
+                    playerController.characterView.PlayAnimation("Rogue_attack_02");
+                    playerController.isInteracting = true;
+                    Debug.Log("Equipped");
                 }
                 else
                 {
                     Debug.Log("Wrong Equipment Type");
                     droppedObject = null;
                 }
-            }
+        }
+        else
+        {
+            Debug.Log("Slot is full");
+        }
 
     }
 
@@ -46,21 +56,6 @@ public class EquipmentSlot : MonoBehaviour, IDropHandler
     {
         if (droppedObject != null && droppedObject.transform.parent != transform)
         {
-            switch (equipmentType)
-            {
-                case EquipmentType.Hood:
-                    equipmentManager.hoodSpriteRenderer.sprite = equipmentManager.defaultHoodSprite;
-                    break;
-                case EquipmentType.UpperClothes:
-                    equipmentManager.upperClothesSpriteRenderer.sprite = equipmentManager.defaultUpperClothesSprite;
-                    break;
-                case EquipmentType.LowerClothes:
-                    equipmentManager.lowerClothesSpriteRenderer.sprite = equipmentManager.defaultLowerClothesSprite;
-                    break;
-                case EquipmentType.Weapon:
-                    equipmentManager.weaponSpriteRenderer.sprite = equipmentManager.defaultWeaponSprite;
-                    break;
-            }
             droppedObject = null;
             Debug.Log("Remove");
         }

@@ -52,20 +52,25 @@ public class EquipmentManager : MonoBehaviour
         switch (equipmentType)
         {
             case EquipmentType.Hood:
-                timesUpdated++;
+                equipmentSO.EquipedHood = item;
                 UpdateEquipmentSprite(item, hoodSpriteRenderer, hoodEquipmentSlot);
+                timesUpdated++;
                 break;
             case EquipmentType.UpperClothes:
-                timesUpdated++;
+                equipmentSO.EquipedUpperClothes = item;
                 UpdateEquipmentSprite(item, upperClothesSpriteRenderer, upperClothesEquipmentSlot);
+                timesUpdated++;
                 break;
             case EquipmentType.LowerClothes:
-                timesUpdated++;
+                equipmentSO.EquipedLowerClothes = item;
                 UpdateEquipmentSprite(item, lowerClothesSpriteRenderer, lowerClothesEquipmentSlot);
+                timesUpdated++;
                 break;
             case EquipmentType.Weapon:
-                timesUpdated++;
+                
+                equipmentSO.EquipedWeapon = item;
                 UpdateEquipmentSprite(item, weaponSpriteRenderer, weaponEquipmentSlot);
+                timesUpdated++;
                 break;
         }
     }
@@ -76,21 +81,6 @@ public void UpdateEquipmentSprite(Item equipment, SpriteRenderer spriteRenderer,
         if (itemSprite != null)
         {
             spriteRenderer.sprite = itemSprite;
-            if (EquipmentSlot.droppedObject != null)
-            {
-                EquipmentSlot.droppedObject.transform.SetParent(EquipmentSlot.transform);
-
-                // Set the size, position, and anchors of the droppedObject
-                RectTransform rectTransform = EquipmentSlot.droppedObject.GetComponent<RectTransform>();
-                if (rectTransform != null && EquipmentSlot.droppedObject.GetComponent<Canvas>() == null)
-                {
-                    rectTransform.sizeDelta = new Vector2(150, 150); // Set width and height to 150
-                    rectTransform.anchorMin = new Vector2(0.5f, 0.5f); // Anchor to the center of the parent
-                    rectTransform.anchorMax = new Vector2(0.5f, 0.5f); // Anchor to the center of the parent
-                    rectTransform.pivot = new Vector2(0.5f, 0.5f); // Set the pivot to the center of the droppedObject
-                    rectTransform.anchoredPosition = Vector2.zero; // Center the droppedObject
-                }
-            }
             timesUpdated++;
         }
         else if (itemSprite == null)
@@ -100,7 +90,7 @@ public void UpdateEquipmentSprite(Item equipment, SpriteRenderer spriteRenderer,
             timesUpdated++;
         }
 }
-            public void Update()
+    public void Update()
     {
         updateText.text = "Times Updated: " + timesUpdated + equipmentSO.EquipedHood + equipmentSO.EquipedUpperClothes + equipmentSO.EquipedLowerClothes + equipmentSO.EquipedWeapon;
     }

@@ -19,15 +19,15 @@ public class PlayerController : MonoBehaviour
     public TextMeshProUGUI moneyText;
 
     [SerializeField] private GameObject attackHitbox;
-    private CharacterView CharacterView;
+    public CharacterView characterView;
 
-    [SerializeField] private bool isInteracting = false;
+    [SerializeField] public bool isInteracting = false;
     [SerializeField] private bool isWalking = false;
 
     // Start is called before the first frame update
     public void Start()
     {
-        CharacterView = GetComponent<CharacterView>();
+        characterView = GetComponent<CharacterView>();
 
         // Load stats from the PlayerStatsSO
         LoadStats();
@@ -79,14 +79,14 @@ public class PlayerController : MonoBehaviour
         {
             isWalking = true;
             // Play the "Walking" animation
-            CharacterView.PlayAnimation("Rogue_walk_01");
+            characterView.PlayAnimation("Rogue_walk_01");
         }
         else if(!isInteracting && movement.magnitude <= 0.01f)
         {
             isWalking = false;
             // If the player is not moving, stop the "Walking" animation
-            CharacterView.StopAnimation("Rogue_walk_01");
-            CharacterView.PlayAnimation("Rogue_idle_01");
+            characterView.StopAnimation("Rogue_walk_01");
+            characterView.PlayAnimation("Rogue_idle_01");
         }
 
             // If the space key is pressed
@@ -123,7 +123,7 @@ public class PlayerController : MonoBehaviour
     {
         if (isWalking) return;
         isInteracting = true;
-        CharacterView.PlayAnimation("Rogue_attack_03");
+        characterView.PlayAnimation("Rogue_attack_03");
         attackHitbox.SetActive(true);
 
         // Damage enemies in the attack hitbox
@@ -168,7 +168,7 @@ public class PlayerController : MonoBehaviour
     {
         isInteracting = true;
         // Play the "Hurt" animation
-        CharacterView.PlayAnimation("Rogue_hit_01");
+        characterView.PlayAnimation("Rogue_hit_01");
 
         // Reduce the player's health by the damage amount
         health -= damage;

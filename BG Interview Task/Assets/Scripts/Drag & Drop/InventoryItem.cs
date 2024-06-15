@@ -7,28 +7,22 @@ using UnityEngine.UI;
 
 public class InventoryItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
-    public static GameObject draggedObject;
 
     public Vector3 originalPosition;
     public Transform originalParent;
-    private CanvasGroup cGroup;
-    private Transform dragParentTransform;
-    public Transform startingParent;
     public Image image;
 
+    [HideInInspector] public Transform parentAfterDrag;
     public Item item;
+    public EquipmentType equipmentType;
 
     public InventoryManager inventoryManager;
 
     public void OnBeginDrag(PointerEventData pointerData)
     {
         image.raycastTarget = false;
-        draggedObject = this.gameObject;
-        originalPosition = this.transform.position;
-        originalParent = this.transform.parent;
-        this.transform.SetParent(dragParentTransform.root);
-
-        cGroup.blocksRaycasts = false;
+        parentAfterDrag = transform.parent;
+        transform.SetParent(transform.root);
     }
 
     public void OnDrag(PointerEventData pointerData)
@@ -39,19 +33,12 @@ public class InventoryItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     public void OnEndDrag(PointerEventData pointerData)
     {
         image.raycastTarget = true;
-        cGroup.blocksRaycasts = true;
-        if (this.transform.parent == dragParentTransform)
-        {
-            this.transform.position = originalPosition;
-            this.transform.SetParent(originalParent);
-            inventoryManager.AddItem(item);
-        }
+        transform.SetParent(parentAfterDrag);
     }
 
     public void InitialiseItem(Item newItem) {
-        cGroup = GetComponent<CanvasGroup>();
-        dragParentTransform = GameObject.FindGameObjectWithTag("ObjectDraggerParent").transform;
         image = GetComponent<Image>();
+        equipmentType = newItem.equipmentType;
         inventoryManager = FindObjectOfType<InventoryManager>();
         item = newItem;
         image.sprite = newItem.itemSprite;
