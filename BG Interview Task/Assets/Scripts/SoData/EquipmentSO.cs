@@ -5,31 +5,32 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Equipment", menuName = "ScriptableObjects/EquipmentSO", order = 1)]
 public class EquipmentSO : ScriptableObject
 {
-    [Header("Equiped Equipment")]
-    private GameObject _equipedHood;
-    private GameObject _equipedUpperClothes;
-    private GameObject _equipedLowerClothes;
-    private GameObject _equipedWeapon; 
+    private Item _equipedHood;
+    private Item _equipedUpperClothes;
+    private Item _equipedLowerClothes;
+    private Item _equipedWeapon; 
 
-    public GameObject EquipedHood
+    
+
+    public Item EquipedHood
     {
         get => _equipedHood;
         set => _equipedHood = value;
     }
 
-    public GameObject EquipedUpperClothes
+    public Item EquipedUpperClothes
     {
         get => _equipedUpperClothes;
         set => _equipedUpperClothes = value;
     }
 
-    public GameObject EquipedLowerClothes
+    public Item EquipedLowerClothes
     {
         get => _equipedLowerClothes;
         set => _equipedLowerClothes = value;
     }
 
-    public GameObject EquipedWeapon
+    public Item EquipedWeapon
     {
         get => _equipedWeapon;
         set => _equipedWeapon = value;
