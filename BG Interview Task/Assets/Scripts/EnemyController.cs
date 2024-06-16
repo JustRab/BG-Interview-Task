@@ -6,7 +6,7 @@ public class EnemyController : MonoBehaviour
 {
     [SerializeField] private int health = 100;
     [SerializeField] private float speed = 2.0f;
-    [SerializeField] private float attackRange = 1.0f;
+    [SerializeField] private float attackRange = 2.0f;
     [SerializeField] private int damage = 10;
     [SerializeField] private int moneyDrop = 10; // The amount of money the enemy drops when it dies
 
@@ -36,6 +36,13 @@ public class EnemyController : MonoBehaviour
         }
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
+        if (playerController.isInSafeZone){
+            characterView.StopAnimation("Rogue_walk_01");
+            characterView.PlayAnimation("Rogue_idle_01");
+        }
+        else
+        {
+
         if (!isAttacking && distanceToPlayer <= attackRange && health > 0)
         {
             StartCoroutine(Attack());
@@ -43,6 +50,7 @@ public class EnemyController : MonoBehaviour
         else if (distanceToPlayer > attackRange && !isAttacking && health > 0)
         {
             MoveTowardsPlayer();
+        }
         }
 
     }
@@ -61,7 +69,7 @@ public class EnemyController : MonoBehaviour
             // Play the "Walking" animation
             characterView.PlayAnimation("Rogue_walk_01");
         }
-        else if(!isAttacking)
+        else if(!isAttacking && direction.magnitude <= 0.01f)
         {
             // If the player is not moving, stop the "Walking" animation
             characterView.StopAnimation("Rogue_walk_01");
@@ -103,6 +111,7 @@ public class EnemyController : MonoBehaviour
         characterView.PlayAnimation("Rogue_death_01");
         yield return new WaitForSeconds(1.5f); // Wait for 1 second to simulate death animation duration
         playerController.AddMoney(moneyDrop);
+        playerController.Heal(5);
         Destroy(gameObject);
     }
 }

@@ -14,5 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Red Hood
   itemSprite: {fileID: 21300000, guid: 20eb058aea3c3a744bb5d47a1610550a, type: 3}
-  itemPrice: 1
+  itemPrice: 100
   equipmentType: 0
+  healthBonus: 5
+  attackBonus: 5
+  speedBonus: 0

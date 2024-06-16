@@ -9,12 +9,13 @@ public class StoreManager : MonoBehaviour
 
     public Collider2D playerCollider;
 
+    public bool isInSafeZone;
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other == playerCollider)
         {
             Debug.Log("Player has entered the shop zone");
-            shopPanel.SetActive(!shopPanel.activeSelf);
+            isInSafeZone = true;
         }
     
     }
@@ -24,7 +25,7 @@ public class StoreManager : MonoBehaviour
         if (other == playerCollider)
         {
             Debug.Log("Player has exited the shop zone");
-            shopPanel.SetActive(!shopPanel.activeSelf);
+            shopPanel.SetActive(false);
         }
     }
 }

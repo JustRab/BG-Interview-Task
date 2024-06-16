@@ -11,6 +11,10 @@ public class Item : ScriptableObject
     public int itemPrice;
     public EquipmentType equipmentType;
 
+    public int healthBonus;
+    public int attackBonus;
+    public int speedBonus;
+
 }
 
 public enum EquipmentType

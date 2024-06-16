@@ -28,6 +28,7 @@ public class EquipmentManager : MonoBehaviour
 
     public EquipmentSO equipmentSO; // The EquipmentSO object
     public InventorySO inventorySO; // The InventorySO object
+    public PlayerController playerController; // The PlayerController objects
 
     private void Start()
     {
@@ -51,19 +52,31 @@ public class EquipmentManager : MonoBehaviour
             case EquipmentType.Hood:
                 equipmentSO.EquipedHood = item;
                 UpdateEquipmentSprite(item, hoodSpriteRenderer, hoodEquipmentSlot);
+                playerController.maxHealth += item.healthBonus;
+                playerController.attackDamage += item.attackBonus;
+                playerController.speed += item.speedBonus;
                 break;
             case EquipmentType.UpperClothes:
                 equipmentSO.EquipedUpperClothes = item;
                 UpdateEquipmentSprite(item, upperClothesSpriteRenderer, upperClothesEquipmentSlot);
+                playerController.maxHealth += item.healthBonus;
+                playerController.attackDamage += item.attackBonus;
+                playerController.speed += item.speedBonus;
                 break;
             case EquipmentType.LowerClothes:
                 equipmentSO.EquipedLowerClothes = item;
                 UpdateEquipmentSprite(item, lowerClothesSpriteRenderer, lowerClothesEquipmentSlot);
+                playerController.maxHealth += item.healthBonus;
+                playerController.attackDamage += item.attackBonus;
+                playerController.speed += item.speedBonus;
                 break;
             case EquipmentType.Weapon:
                 
                 equipmentSO.EquipedWeapon = item;
                 UpdateEquipmentSprite(item, weaponSpriteRenderer, weaponEquipmentSlot);
+                playerController.maxHealth += item.healthBonus;
+                playerController.attackDamage += item.attackBonus;
+                playerController.speed += item.speedBonus;
                 break;
         }
     }

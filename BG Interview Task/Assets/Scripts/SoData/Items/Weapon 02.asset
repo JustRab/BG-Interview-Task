@@ -14,5 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Weapon 02
   itemSprite: {fileID: 21300000, guid: 0a4a3c212d77eb243aeaac660261fb0f, type: 3}
-  itemPrice: 1
+  itemPrice: 150
   equipmentType: 3
+  healthBonus: 0
+  attackBonus: 10
+  speedBonus: 2

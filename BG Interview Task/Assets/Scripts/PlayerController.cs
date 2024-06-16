@@ -14,15 +14,19 @@ public class PlayerController : MonoBehaviour
 
 
     public GameObject inventoryPanel;
+    public GameObject shopPanel;
     public PlayerStatsSO playerStats; // Reference to the PlayerStatsSO
     public TextMeshProUGUI healthText;
     public TextMeshProUGUI moneyText;
 
     [SerializeField] private GameObject attackHitbox;
     public CharacterView characterView;
+    public StoreManager storeManager;
 
     [SerializeField] public bool isInteracting = false;
     [SerializeField] private bool isWalking = false;
+    public  bool isInSafeZone = false;
+    
 
     // Start is called before the first frame update
     public void Start()
@@ -52,8 +56,23 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (isInSafeZone && Input.GetKeyDown(KeyCode.E) && !isInteracting && !inventoryPanel.activeSelf)
         {
+            shopPanel.SetActive(true);
+            inventoryPanel.SetActive(true);
+            isInteracting = true;
+            characterView.PlayAnimation("Rogue_attack_02");
+        }
+        else if(isInSafeZone && Input.GetKeyDown(KeyCode.E) && !isInteracting && inventoryPanel.activeSelf)
+        {
+            shopPanel.SetActive(false);
+            inventoryPanel.SetActive(false);
+            isInteracting = true;
+            characterView.PlayAnimation("Rogue_attack_02");
+        }
+        else if (!isInSafeZone && Input.GetKeyDown(KeyCode.E))
+        {
+            characterView.PlayAnimation("Rogue_attack_02");
             inventoryPanel.SetActive(!inventoryPanel.activeSelf);
         }
 
@@ -92,6 +111,7 @@ public class PlayerController : MonoBehaviour
             // If the space key is pressed
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            if(isInteracting) return;
             // Call the Attack method
             Attack();
         }
@@ -114,7 +134,7 @@ public class PlayerController : MonoBehaviour
     void UpdateHealthAndMoneyText()
     {
         // Update the health text
-        healthText.text = health.ToString();
+        healthText.text = health.ToString() + "/" + maxHealth.ToString();
 
         // Update the money text
         moneyText.text = money.ToString();
@@ -206,7 +226,7 @@ public class PlayerController : MonoBehaviour
         if (collider.CompareTag("SafeZone"))
         {
             Debug.Log("Player has entered the safe zone");
-            inventoryPanel.SetActive(true);
+            isInSafeZone = true;
         }
 
     }
@@ -216,7 +236,9 @@ public class PlayerController : MonoBehaviour
         if (collider.CompareTag("SafeZone"))
         {
             Debug.Log("Player has exited the safe zone");
+            isInSafeZone = false;
             inventoryPanel.SetActive(false);
+            shopPanel.SetActive(false);
         }
     }
 }
