@@ -29,9 +29,6 @@ public class EquipmentManager : MonoBehaviour
     public EquipmentSO equipmentSO; // The EquipmentSO object
     public InventorySO inventorySO; // The InventorySO object
 
-    [SerializeField] public int timesUpdated = 0;
-    public TextMeshProUGUI updateText;
-
     private void Start()
     {
         // Set the default equipment
@@ -54,23 +51,19 @@ public class EquipmentManager : MonoBehaviour
             case EquipmentType.Hood:
                 equipmentSO.EquipedHood = item;
                 UpdateEquipmentSprite(item, hoodSpriteRenderer, hoodEquipmentSlot);
-                timesUpdated++;
                 break;
             case EquipmentType.UpperClothes:
                 equipmentSO.EquipedUpperClothes = item;
                 UpdateEquipmentSprite(item, upperClothesSpriteRenderer, upperClothesEquipmentSlot);
-                timesUpdated++;
                 break;
             case EquipmentType.LowerClothes:
                 equipmentSO.EquipedLowerClothes = item;
                 UpdateEquipmentSprite(item, lowerClothesSpriteRenderer, lowerClothesEquipmentSlot);
-                timesUpdated++;
                 break;
             case EquipmentType.Weapon:
                 
                 equipmentSO.EquipedWeapon = item;
                 UpdateEquipmentSprite(item, weaponSpriteRenderer, weaponEquipmentSlot);
-                timesUpdated++;
                 break;
         }
     }
@@ -81,19 +74,13 @@ public void UpdateEquipmentSprite(Item equipment, SpriteRenderer spriteRenderer,
         if (itemSprite != null)
         {
             spriteRenderer.sprite = itemSprite;
-            timesUpdated++;
         }
         else if (itemSprite == null)
         {
             Debug.Log("No Sprite");
             spriteRenderer.sprite = null;
-            timesUpdated++;
         }
 }
-    public void Update()
-    {
-        updateText.text = "Times Updated: " + timesUpdated + equipmentSO.EquipedHood + equipmentSO.EquipedUpperClothes + equipmentSO.EquipedLowerClothes + equipmentSO.EquipedWeapon;
-    }
 }
 
 

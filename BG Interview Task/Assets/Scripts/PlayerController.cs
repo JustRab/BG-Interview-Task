@@ -201,15 +201,22 @@ public class PlayerController : MonoBehaviour
         money += moneyAmount;
     }
 
-    public void SaveStats()
+    private void OnTriggerEnter2D(Collider2D collider)
     {
-        // Save the player's stats to the PlayerStatsSO
-        playerStats.SaveStats(maxHealth, health, attackDamage, speed, money);
+        if (collider.CompareTag("SafeZone"))
+        {
+            Debug.Log("Player has entered the safe zone");
+            inventoryPanel.SetActive(true);
+        }
+
     }
 
-    private void OnApplicationQuit()
+    private void OnTriggerExit2D(Collider2D collider)
     {
-        // Save the player's stats when the application quits
-        SaveStats();
+        if (collider.CompareTag("SafeZone"))
+        {
+            Debug.Log("Player has exited the safe zone");
+            inventoryPanel.SetActive(false);
+        }
     }
 }

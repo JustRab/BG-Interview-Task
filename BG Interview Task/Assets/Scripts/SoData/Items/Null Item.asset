@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Null Item
   itemSprite: {fileID: 0}
+  itemPrice: 1
   equipmentType: 0

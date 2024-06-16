@@ -6,9 +6,18 @@ public class ShopManager : MonoBehaviour
 {
     public InventoryManager inventoryManager;
     public Item[] itemsToPickup;
+    public PlayerController playerController;
 
+    public void OnEnable()
+    {
+        playerController = FindObjectOfType<PlayerController>();
+    }
     public void PickupItem(int id)
     {
-        inventoryManager.AddItem(itemsToPickup[id]);
+        if(playerController.money >= itemsToPickup[id].itemPrice)
+        {
+            playerController.money -= itemsToPickup[id].itemPrice;
+            inventoryManager.AddItem(itemsToPickup[id]);
+        }
     }
 }
